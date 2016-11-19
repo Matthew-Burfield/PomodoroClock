@@ -6,6 +6,8 @@
 
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" integrity="sha384-h21C2fcDk/eFsW9sC9h0dhokq5pDinLNklTKoxIZRUn3+hvmgQSffLLQ4G4l2eEr" crossorigin="anonymous">
 
+    <link href="https://fonts.googleapis.com/css?family=Cuprum:700" rel="stylesheet">
+
     <style type="text/css">
       @import url(http://fonts.googleapis.com/css?family=Lato:700);
 
@@ -16,11 +18,23 @@
       }
       html,
       body {
-        background: #ecf0f1;
-        color: #444;
+        background:
+          linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+          linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+          linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+          linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+          linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+          linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+          background-color: #131313;
+          background-size: 20px 20px;
+        color: #fff;
         font-family: 'Lato', Tahoma, Geneva, sans-serif;
         font-size: 16px;
         padding: 10px;
+      }
+      h1 {
+        font-size: 3em;
+        font-family: 'Cuprum', sans-serif;
       }
       .set-size {
         font-size: 30em;
@@ -51,7 +65,7 @@
       .pie-wrapper .pie .half-circle {
         height: 100%;
         width: 100%;
-        border: 0.1em solid #3498db;
+        border: 0.1em solid #337ab7;
         border-radius: 50%;
         clip: rect(0, 0.5em, 1em, 0);
         left: 0;
@@ -59,7 +73,7 @@
         top: 0;
       }
       .pie-wrapper .label {
-        background: #34495e;
+        /*background: #34495e;*/
         border-radius: 50%;
         bottom: 0.4em;
         color: #ecf0f1;
@@ -92,41 +106,26 @@
       .pie-wrapper.style-2 .label .smaller {
         color: #bdc3c7;
       }
+
+      $(".pie-wrapper.countdown-timer .pie .right-side").css("display", "block");
+              $(".pie-wrapper.countdown-timer .pie").css("clip", "rect(auto, auto, auto, auto)");
+              $(".pie-wrapper.countdown-timer .pie .right-side").css("-webkit-transform", "rotate(180deg)");
+              $(".pie-wrapper.countdown-timer .pie .right-side").css("transform", "rotate(180deg)");
+
+
       .pie-wrapper.countdown-timer .pie {
+        clip: rect(auto, auto, auto, auto);
       }
       .pie-wrapper.countdown-timer .pie .right-side {
-        display: none;
+        -webkit-transform: rotate(180deg);
+                transform: rotate(180deg);
       }
       .pie-wrapper.countdown-timer .pie .half-circle {
-        border-color: #3498db;
+        border-color: #337ab7;
       }
       .pie-wrapper.countdown-timer .pie .left-side {
         -webkit-transform: rotate(0deg);
                 transform: rotate(0deg);
-      }
-      .pie-wrapper.progress-90 .pie {
-        clip: rect(auto, auto, auto, auto);
-      }
-      .pie-wrapper.progress-90 .pie .right-side {
-        -webkit-transform: rotate(180deg);
-                transform: rotate(180deg);
-      }
-      .pie-wrapper.progress-90 .pie .half-circle {
-        border-color: #e67e22;
-      }
-      .pie-wrapper.progress-90 .pie .left-side {
-        -webkit-transform: rotate(324deg);
-                transform: rotate(324deg);
-      }
-      .pie-wrapper.progress-45 .pie .right-side {
-        display: none;
-      }
-      .pie-wrapper.progress-45 .pie .half-circle {
-        border-color: #1abc9c;
-      }
-      .pie-wrapper.progress-45 .pie .left-side {
-        -webkit-transform: rotate(162deg);
-                transform: rotate(162deg);
       }
       .pie-wrapper--solid {
         border-radius: 50%;
@@ -147,32 +146,44 @@
     </style>
   </head>
   <body>
-    <div id="main-container">
-      <div class="btn-group-vertical" role="group" aria-label="set-session-timer-length">
-        <button id="btnIncreaseSession" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></button>
-        <button id="btnSessionVal" type="button" class="btn btn-default">25</button>
-        <button id="btnDecreaseSession" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></button>
-      </div>
+    <div id="main-container container">
 
-      <div class="btn-group-vertical" role="group" aria-label="set-break-timer-length">
-        <button id="btnIncreaseBreak" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></button>
-        <button id="btnBreakVal" type="button" class="btn btn-default">5</button>
-        <button id="btnDecreaseBreak" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></button>
+      <div class="row">
+        <h1 class="col-md-offset-1">Pomodoro Clock!</h1>
       </div>
-
-      <div class="set-size charts-container">
-        <div class="pie-wrapper countdown-timer">
-          <span class="label">25<span class="smaller">00</span></span>
-          <div class="pie">
-            <div class="left-side half-circle"></div>
-            <div class="right-side half-circle"></div>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="set-size charts-container">
+            <div class="pie-wrapper countdown-timer">
+              <span class="label">25<span class="smaller">00</span></span>
+              <div class="pie">
+                <div class="left-side half-circle"></div>
+                <div class="right-side half-circle"></div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="btn-group" role="group" aria-label="...">
-        <button id="btnStart" type="button" class="btn btn-default">Start</button>
-        <button id="btnReset" type="button" class="btn btn-default">Reset</button>
+        <div class="col-md-4">
+          <div class="btn-group" role="group" aria-label="start-stop-reset-buttons">
+            <button id="btnStart" type="button" class="btn btn-default">Start</button>
+            <button id="btnReset" type="button" class="btn btn-default">Reset</button>
+          </div>
+
+          <h4>Session length</h4>
+          <div class="btn-group-vertical" role="group" aria-label="set-session-timer-length">
+            <button id="btnIncreaseSession" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></button>
+            <button id="btnSessionVal" type="button" class="btn btn-default">25</button>
+            <button id="btnDecreaseSession" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></button>
+          </div>
+
+          <h4>Break length</h4>
+          <div class="btn-group-vertical" role="group" aria-label="set-break-timer-length">
+            <button id="btnIncreaseBreak" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></button>
+            <button id="btnBreakVal" type="button" class="btn btn-default">5</button>
+            <button id="btnDecreaseBreak" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -283,7 +294,6 @@
           this.startBreak = function() {
             startTime = new Date().getTime() / 1000;
             timerRunning = true;
-            $(".btn.btn-default").prop("disabled", true);
             // Set the progress bar colour #d9534f
             $(".pie-wrapper.countdown-timer .pie .half-circle").css("border-color", "#d9534f");
             intervalID = window.setInterval(updateBreak, 10, startTime);

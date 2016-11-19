@@ -1,0 +1,419 @@
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" integrity="sha384-h21C2fcDk/eFsW9sC9h0dhokq5pDinLNklTKoxIZRUn3+hvmgQSffLLQ4G4l2eEr" crossorigin="anonymous">
+
+    <style type="text/css">
+      @import url(http://fonts.googleapis.com/css?family=Lato:700);
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        background: #ecf0f1;
+        color: #444;
+        font-family: 'Lato', Tahoma, Geneva, sans-serif;
+        font-size: 16px;
+        padding: 10px;
+      }
+      .set-size {
+        font-size: 30em;
+      }
+      .charts-container:after {
+        clear: both;
+        content: "";
+        display: table;
+      }
+      .pie-wrapper {
+        height: 1em;
+        width: 1em;
+        float: left;
+        margin: 15px;
+        position: relative;
+      }
+      .pie-wrapper:nth-child(3n+1) {
+        clear: both;
+      }
+      .pie-wrapper .pie {
+        height: 100%;
+        width: 100%;
+        clip: rect(0, 1em, 1em, 0.5em);
+        left: 0;
+        position: absolute;
+        top: 0;
+      }
+      .pie-wrapper .pie .half-circle {
+        height: 100%;
+        width: 100%;
+        border: 0.1em solid #3498db;
+        border-radius: 50%;
+        clip: rect(0, 0.5em, 1em, 0);
+        left: 0;
+        position: absolute;
+        top: 0;
+      }
+      .pie-wrapper .label {
+        background: #34495e;
+        border-radius: 50%;
+        bottom: 0.4em;
+        color: #ecf0f1;
+        cursor: default;
+        display: block;
+        font-size: 0.25em;
+        left: 0.4em;
+        line-height: 2.6em;
+        position: absolute;
+        right: 0.4em;
+        text-align: center;
+        top: 0.4em;
+      }
+      .pie-wrapper .label .smaller {
+        color: #bdc3c7;
+        font-size: .45em;
+        padding-bottom: 20px;
+        vertical-align: super;
+      }
+      .pie-wrapper .shadow {
+        height: 100%;
+        width: 100%;
+        border: 0.1em solid #bdc3c7;
+        border-radius: 50%;
+      }
+      .pie-wrapper.style-2 .label {
+        background: none;
+        color: #7f8c8d;
+      }
+      .pie-wrapper.style-2 .label .smaller {
+        color: #bdc3c7;
+      }
+      .pie-wrapper.countdown-timer .pie {
+      }
+      .pie-wrapper.countdown-timer .pie .right-side {
+        display: none;
+      }
+      .pie-wrapper.countdown-timer .pie .half-circle {
+        border-color: #3498db;
+      }
+      .pie-wrapper.countdown-timer .pie .left-side {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+      }
+      .pie-wrapper.progress-90 .pie {
+        clip: rect(auto, auto, auto, auto);
+      }
+      .pie-wrapper.progress-90 .pie .right-side {
+        -webkit-transform: rotate(180deg);
+                transform: rotate(180deg);
+      }
+      .pie-wrapper.progress-90 .pie .half-circle {
+        border-color: #e67e22;
+      }
+      .pie-wrapper.progress-90 .pie .left-side {
+        -webkit-transform: rotate(324deg);
+                transform: rotate(324deg);
+      }
+      .pie-wrapper.progress-45 .pie .right-side {
+        display: none;
+      }
+      .pie-wrapper.progress-45 .pie .half-circle {
+        border-color: #1abc9c;
+      }
+      .pie-wrapper.progress-45 .pie .left-side {
+        -webkit-transform: rotate(162deg);
+                transform: rotate(162deg);
+      }
+      .pie-wrapper--solid {
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      .pie-wrapper--solid:before {
+        border-radius: 0 100% 100% 0%;
+        content: '';
+        display: block;
+        height: 100%;
+        margin-left: 50%;
+        -webkit-transform-origin: left;
+                transform-origin: left;
+      }
+      .pie-wrapper--solid .label {
+        background: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main-container">
+      <div class="btn-group-vertical" role="group" aria-label="set-session-timer-length">
+        <button id="btnIncreaseSession" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></button>
+        <button id="btnSessionVal" type="button" class="btn btn-default">25</button>
+        <button id="btnDecreaseSession" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></button>
+      </div>
+
+      <div class="btn-group-vertical" role="group" aria-label="set-break-timer-length">
+        <button id="btnIncreaseBreak" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></button>
+        <button id="btnBreakVal" type="button" class="btn btn-default">5</button>
+        <button id="btnDecreaseBreak" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></button>
+      </div>
+
+      <div class="set-size charts-container">
+        <div class="pie-wrapper countdown-timer">
+          <span class="label">25<span class="smaller">00</span></span>
+          <div class="pie">
+            <div class="left-side half-circle"></div>
+            <div class="right-side half-circle"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-group" role="group" aria-label="...">
+        <button id="btnStart" type="button" class="btn btn-default">Start</button>
+        <button id="btnReset" type="button" class="btn btn-default">Reset</button>
+      </div>
+    </div>
+
+    <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+
+    <script 
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
+    crossorigin="anonymous"></script>
+
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/buzz/1.2.0/buzz.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        var session = new SessionTime(),
+            timer = new Timer();
+
+        $(".countdown-timer").click(function() {
+          startTimer();
+        });
+
+        $("#btnIncreaseSession").click(function() {
+          session.increaseSessionTime();
+        });
+
+        $("#btnDecreaseSession").click(function() {
+          session.decreaseSessionTime();
+        });
+
+        $("#btnIncreaseBreak").click(function() {
+          session.increaseBreakTime();
+        });
+
+        $("#btnDecreaseBreak").click(function() {
+          session.decreaseBreakTime();
+        });
+
+        $("#btnStart").click(function() {
+          if ($(this).html() === "Start") {
+            $(this).html("Stop");
+            startTimer();
+          } else {
+            $(this).html("Start");
+            stopTimer();
+          }
+        });
+
+        $("#btnReset").click(function() {
+          stopTimer();
+          $("#btnStart").html("Start");
+          timer = new Timer();
+          session = new SessionTime();
+          session.updateDOM();
+        });
+
+        $("#btnReset").click(function() {
+          session.decreaseBreakTime();
+        });
+
+        function startTimer() {
+          if (timer && !timer.isRunning()) {
+            timer.startTimer()
+          } else {
+            timer.pause();;
+          }
+        }
+
+        function stopTimer() {
+          if (timer && timer.isRunning()) {
+            timer.pause()
+          }
+        }
+
+        function Timer() {
+          var startTime = null,
+              timerRunning = false,
+              intervalID = null,
+              sessionRunning = false
+              that = this,
+              sound = new buzz.sound("./sounds/end_chime.mp3", {
+                preload: true,
+                autoplay: false,
+                loop: false,
+              });
+
+          this.startTimer = function() {
+            startTime = new Date().getTime() / 1000;
+            timerRunning = true;
+            //$(".btn.btn-default").prop("disabled", true);
+            // Set the progress bar colour #337ab7
+            $(".pie-wrapper.countdown-timer .pie .half-circle").css("border-color", "#337ab7");
+            intervalID = window.setInterval(updateSession, 10, startTime);
+          }
+
+          this.isRunning = function() {
+            return timerRunning;
+          }
+
+          this.pause = function() {
+            timerRunning = false;
+            clearInterval(intervalID);
+          }
+
+          this.startBreak = function() {
+            startTime = new Date().getTime() / 1000;
+            timerRunning = true;
+            $(".btn.btn-default").prop("disabled", true);
+            // Set the progress bar colour #d9534f
+            $(".pie-wrapper.countdown-timer .pie .half-circle").css("border-color", "#d9534f");
+            intervalID = window.setInterval(updateBreak, 10, startTime);
+          }
+
+          function updateSession() {
+            var timeDiff = Number.parseInt((new Date().getTime() / 1000) - startTime);
+            $('div.countdown-timer > span.label')
+              .html(getSessionMinutesDiff(timeDiff) + '<span class="smaller">' + getSecondsDiff(timeDiff) + '</span>');
+
+            if (timeDiff >= session.getSessionTime_S()) {
+              // The session has ended. We need to play a chime, and then start the break
+              sound.play();
+              clearInterval(intervalID);
+              that.startBreak();
+            }
+
+            // Update the progress bar
+            updateProgressBar(timeDiff / session.getSessionTime_S());
+          }
+
+          function updateBreak() {
+            var timeDiff = Number.parseInt((new Date().getTime() / 1000) - startTime);
+            $('div.countdown-timer > span.label')
+              .html(getBreakMinutesDiff(timeDiff) + '<span class="smaller">' + getSecondsDiff(timeDiff) + '</span>');
+
+            if (timeDiff >= session.getBreakTime_S()) {
+              // The break has ended. We need to play a chime, and then start the session
+              sound.play();
+              clearInterval(intervalID);
+              that.startTimer();
+            }
+
+            // Update the progress bar
+            var inversePercentage = 1 - (timeDiff / session.getBreakTime_S());
+            updateProgressBar(inversePercentage); // we inverse the percentage so we can have the effect of counting backwards to the start of the next session
+          }
+
+          function getSessionMinutesDiff(timeDiff) {
+            return session.getSessionTime_M() - Math.ceil(timeDiff/60);
+          }
+
+          function getBreakMinutesDiff(timeDiff) {
+            return session.getBreakTime_M() - Math.ceil(timeDiff/60);
+          }
+
+          function getSecondsDiff(timeDiff) {
+            var seconds = Math.ceil(timeDiff%60);
+            // we don't want to show 60 seconds. Count down to 0, then start again from 59
+            seconds = (60 - seconds) === 60 ? 0 : (60 - seconds); 
+            // keep as a 2 digit number when 9 or less.
+            seconds = seconds < 10 ? "0" + seconds : seconds; 
+            return seconds;
+          }
+
+          /* param: percentComplete: Is the measuremet of time passed of the overall session length expressed as a fraction.
+                                    I.e. 50% of time passed would be 0.5 */
+          function updateProgressBar(percentComplete) {
+            var progressBarDegrees = percentComplete * 360;
+
+            if (progressBarDegrees > 180) {
+              $(".pie-wrapper.countdown-timer .pie .right-side").css("display", "block");
+              $(".pie-wrapper.countdown-timer .pie").css("clip", "rect(auto, auto, auto, auto)");
+              $(".pie-wrapper.countdown-timer .pie .right-side").css("-webkit-transform", "rotate(180deg)");
+              $(".pie-wrapper.countdown-timer .pie .right-side").css("transform", "rotate(180deg)");
+            } 
+            if (progressBarDegrees <= 180) {
+              $(".pie-wrapper.countdown-timer .pie .right-side").css("display", "none");
+              $(".pie-wrapper.countdown-timer .pie .right-side").css("-webkit-transform", "rotate(0deg)");
+              $(".pie-wrapper.countdown-timer .pie .right-side").css("transform", "rotate(0deg)");
+              $(".pie-wrapper.countdown-timer .pie").css("clip", "");
+            } 
+            $(".pie-wrapper.countdown-timer .pie .left-side").css("-webkit-transform", "rotate(" + progressBarDegrees + "deg)");
+            $(".pie-wrapper.countdown-timer .pie .left-side").css("transform", "rotate(" + progressBarDegrees + "deg)");
+          }
+        }
+
+        function SessionTime() {
+          var sessionTime = 25,
+              breakTime = 5,
+              that = this;
+
+          this.getSessionTime_M = function() {
+            return sessionTime;
+          };
+
+          this.getBreakTime_M = function() {
+            return breakTime;
+          };
+
+          this.getSessionTime_S = function() {
+            return sessionTime * 60;
+          };
+
+          this.getBreakTime_S = function() {
+            return breakTime * 60;
+          };
+
+          this.increaseSessionTime = function() {
+            sessionTime++;
+            that.updateDOM();
+            return true;
+          };
+
+          this.decreaseSessionTime = function() {
+            sessionTime = sessionTime <= 1 ? 1 : sessionTime - 1; // We don't want to set the sessionTime to 0 or negative
+            that.updateDOM();
+            return true;
+          };
+
+          this.increaseBreakTime = function() {
+            breakTime++;
+            that.updateDOM();
+            return true;
+          };
+
+          this.decreaseBreakTime = function() {
+            breakTime = breakTime <= 1 ? 1 : breakTime - 1; // We don't want to set the sessionTime to 0 or negative
+            that.updateDOM();
+            return true;
+          };
+
+          this.updateDOM = function() {
+            $("#btnSessionVal").html(sessionTime);
+            $("#btnBreakVal").html(breakTime);
+            $('div.countdown-timer > span.label').html(sessionTime + '<span class="smaller">00</span>');
+          }
+        }
+        
+      }); // end $(document).ready
+    </script>
+  </body>
+</html>

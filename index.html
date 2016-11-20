@@ -106,19 +106,13 @@
       .pie-wrapper.style-2 .label .smaller {
         color: #bdc3c7;
       }
-
-      $(".pie-wrapper.countdown-timer .pie .right-side").css("display", "block");
-              $(".pie-wrapper.countdown-timer .pie").css("clip", "rect(auto, auto, auto, auto)");
-              $(".pie-wrapper.countdown-timer .pie .right-side").css("-webkit-transform", "rotate(180deg)");
-              $(".pie-wrapper.countdown-timer .pie .right-side").css("transform", "rotate(180deg)");
-
-
       .pie-wrapper.countdown-timer .pie {
-        clip: rect(auto, auto, auto, auto);
+        /*clip: rect(auto, auto, auto, auto);*/
       }
       .pie-wrapper.countdown-timer .pie .right-side {
-        -webkit-transform: rotate(180deg);
-                transform: rotate(180deg);
+        /*-webkit-transform: rotate(180deg);
+                transform: rotate(180deg);*/
+        display: none;
       }
       .pie-wrapper.countdown-timer .pie .half-circle {
         border-color: #337ab7;
@@ -183,6 +177,9 @@
             <button id="btnBreakVal" type="button" class="btn btn-default">5</button>
             <button id="btnDecreaseBreak" type="button" class="btn btn-default"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></button>
           </div>
+
+          <h4>Sound</h4>
+          <button id="btnSoundControl" type="button" class="btn btn-default"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></button>
         </div>
       </div>
     </div>
@@ -223,6 +220,15 @@
 
         $("#btnDecreaseBreak").click(function() {
           session.decreaseBreakTime();
+        });
+
+        $("#btnSoundControl").click(function() {
+          timer.toggleSound();
+          if (timer.isSoundOn()) {
+            $(this).html('<span class="glyphicon glyphicon-volume-up" aria-hidden="true">');
+          } else {
+            $(this).html('<span class="glyphicon glyphicon-volume-off" aria-hidden="true">');
+          }
         });
 
         $("#btnStart").click(function() {
@@ -267,6 +273,7 @@
               intervalID = null,
               sessionRunning = false
               that = this,
+              soundOn = true,
               sound = new buzz.sound("./sounds/end_chime.mp3", {
                 preload: true,
                 autoplay: false,
@@ -299,6 +306,14 @@
             intervalID = window.setInterval(updateBreak, 10, startTime);
           }
 
+          this.toggleSound = function() {
+            soundOn = soundOn === true ? false : true;
+          }
+
+          this.isSoundOn = function() {
+            return soundOn;
+          }
+
           function updateSession() {
             var timeDiff = Number.parseInt((new Date().getTime() / 1000) - startTime);
             $('div.countdown-timer > span.label')
@@ -306,7 +321,9 @@
 
             if (timeDiff >= session.getSessionTime_S()) {
               // The session has ended. We need to play a chime, and then start the break
-              sound.play();
+              if (soundOn) {
+                sound.play();
+              }
               clearInterval(intervalID);
               that.startBreak();
             }
@@ -322,7 +339,9 @@
 
             if (timeDiff >= session.getBreakTime_S()) {
               // The break has ended. We need to play a chime, and then start the session
-              sound.play();
+              if (soundOn) {
+                sound.play();
+              }
               clearInterval(intervalID);
               that.startTimer();
             }
